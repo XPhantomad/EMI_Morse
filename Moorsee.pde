@@ -1,3 +1,6 @@
+import java.lang.Math;
+
+
 String word = "";
 String moword = "";
 String showtext = "Bitte geben Sie einen Buchstaben oder eine Zahl ein";
@@ -24,13 +27,16 @@ void setup(){
 void draw() {
   background(0, 45, 113);
   fill(0, 123, 12);
-  rectMode(CENTER);
-  rect(400, 200, 300, 75);
+  rect(rectx, recty, rectbreadth, rectheight);
   fill(178, 45,0);
   textAlign(CENTER);
   textSize(32);
   text(input, 400, 150);
   text(output, 400, 300);
+  textSize(20);
+  text("Backspace zum Löschen", 670, 25);
+  textSize(32);
+  text("Übersetzen", 400, 215);
   // woerd.substring(2) nimmt wort ab 3. Buchstabe
     //string Morse(input);
 }
@@ -77,6 +83,16 @@ void keyPressed(){
     default: println("wrong entry");   break;
   }  
   input = word;
+  
+  if (keyCode == ENTER){
+    uebfkt();
+  }
+  if (keyCode == BACKSPACE){
+    output = "";
+    input = "";
+    word = "";
+    moword = "";
+  }
   /*
   if (key == 'b'){
     println("bededed");
@@ -94,7 +110,22 @@ void keyPressed(){
 void mousePressed(){
  if (mouseX > (rectx-0.5*rectbreadth) && mouseX < (rectx+0.5*rectbreadth) && 
      mouseY > (recty-0.5*rectheight) && mouseY < (recty+0.5*rectheight)){
-     output = moword;
-  }
-  
+     uebfkt();
+  } 
+}
+void uebfkt(){
+    output = moword;
+    //Mittlere Wortlänge L = Sum(pi* Ni)
+    HashMap<Character,Integer> map = new HashMap<Character,Integer>();
+      String s = moword;
+      for(int i = 0; i < s.length(); i++){
+         char c = s.charAt(i);
+         Integer val = map.get(c);
+          if(val != null){
+            map.put(c, new Integer(val + 1));
+          }else{
+            map.put(c,1);
+          }
+      }
+      
 }
