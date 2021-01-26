@@ -10,6 +10,12 @@ int rectx = 400;
 int recty = 200;
 int rectbreadth = 300;
 int rectheight = 80;
+float L = 0;
+float H = 0;
+String Lout ="";
+String Hout ="";
+String Rout ="";
+
 
 void setup(){
   frameRate(37);
@@ -37,6 +43,9 @@ void draw() {
   text("Backspace zum Löschen", 670, 25);
   textSize(32);
   text("Übersetzen", 400, 215);
+  text("L=" + Lout, 400, 350);
+  text("H=" + Hout, 400, 400);
+  text("R=" + Rout, 400, 450);
   // woerd.substring(2) nimmt wort ab 3. Buchstabe
     //string Morse(input);
 }
@@ -92,6 +101,9 @@ void keyPressed(){
     input = "";
     word = "";
     moword = "";
+    Lout ="";
+    Hout ="";
+    Rout ="";
   }
   /*
   if (key == 'b'){
@@ -114,10 +126,12 @@ void mousePressed(){
   } 
 }
 void uebfkt(){
+    L=0;
+    H=0;
     output = moword;
-    //Mittlere Wortlänge L = Sum(pi* Ni)
+    // map number of single characters in word
     HashMap<Character,Integer> map = new HashMap<Character,Integer>();
-      String s = moword;
+      String s = word;
       for(int i = 0; i < s.length(); i++){
          char c = s.charAt(i);
          Integer val = map.get(c);
@@ -127,5 +141,53 @@ void uebfkt(){
             map.put(c,1);
           }
       }
-      
+    for (char i : map.keySet()){  // runs trough all characters in the map
+      int n=0;
+      float prob = float(map.get(i))/word.length();
+      switch (i){
+        case 'a': n=4;     break;
+        case 'b': n=6;     break;
+        case 'c': n=8;     break;
+        case 'd': n=5;     break;
+        case 'e': n=1;     break;
+        case 'f': n=6;     break;
+        case 'g': n=7;     break;
+        case 'h': n=4;     break;
+        case 'i': n=2;     break;
+        case 'j': n=10;    break;
+        case 'k': n=7;     break;
+        case 'l': n=6;     break;
+        case 'm': n=6;     break;
+        case 'n': n=4;     break;
+        case 'o': n=9;     break;
+        case 'p': n=8;     break;
+        case 'q': n=10;    break;
+        case 'r': n=5;     break;
+        case 's': n=3;     break;
+        case 't': n=3;     break;
+        case 'u': n=5;     break;
+        case 'v': n=6;     break;
+        case 'w': n=7;     break;
+        case 'x': n=8;     break;
+        case 'y': n=10;    break;
+        case 'z': n=8;     break;
+        case '1': n=13;    break;
+        case '2': n=11;    break;
+        case '3': n=9;     break;
+        case '4': n=7;     break;
+        case '5': n=5;     break;
+        case '6': n=7;     break;
+        case '7': n=9;     break;
+        case '8': n=11;    break;
+        case '9': n=13;    break;
+        case '0': n=15;    break;
+        default: println("impossible error");   break;
+      }
+      L += prob*n;
+      H += prob*(Math.log(prob)/Math.log(2));
+    }
+    if (H!=0) H=(-1)*H;
+    Lout = str(L);
+    Hout = str(H);
+    Rout = str(L-H);
 }
