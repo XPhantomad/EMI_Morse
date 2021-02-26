@@ -9,4 +9,4 @@ Ausgabe der Entropie des Morsecodes
 
 Ausgabe der Redundanz des Morsecodes
 
-WS20/21
+WS20/21 Einführung in die Medieninformatik
